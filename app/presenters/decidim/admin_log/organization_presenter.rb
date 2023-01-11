@@ -87,7 +87,7 @@ module Decidim
 
       def action_string
         case action
-        when "update_id_documents_config", "update_extra_user_fields"
+        when "update_id_documents_config", "update_extra_user_fields", "export_users"
           "decidim.admin_log.organization.#{action}"
         else
           "decidim.admin_log.organization.update"

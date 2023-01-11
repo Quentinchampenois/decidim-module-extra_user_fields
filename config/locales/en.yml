@@ -14,8 +14,9 @@ en:
           title: Manage extra user fields
     admin_log:
       organization:
-        update_extra_user_fields: "%{user_name} updated %{resource_name} extra user
-          fields settings"
+        export_users: "%{user_name} has exported the users"
+        update_extra_user_fields: "%{user_name} has updated the signup form through
+          extra user fields"
     components:
       extra_user_fields:
         name: ExtraUserFields
