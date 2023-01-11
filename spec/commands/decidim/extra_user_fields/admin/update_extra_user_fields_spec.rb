@@ -80,6 +80,15 @@ module Decidim
 
               # EndBlock
             end
+
+            it "traces the action", versioning: true do
+              expect(Decidim.traceability)
+                .to receive(:perform_action!)
+                .with(:update_extra_user_fields, organization, user)
+                .and_call_original
+
+              expect { command.call }.to change(Decidim::ActionLog, :count).by(1)
+            end
           end
         end
       end
