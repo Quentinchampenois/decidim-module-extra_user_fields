@@ -7,10 +7,9 @@ module Decidim
       class ExportUsers < Rectify::Command
         # format - a string representing the export format
         # current_user - the user performing the action
-        def initialize(format, current_user, current_organization)
+        def initialize(format, current_user)
           @format = format
           @current_user = current_user
-          @current_organization = current_organization
         end
 
         # Exports the current organization not deleted users.
@@ -22,12 +21,12 @@ module Decidim
 
         private
 
-        attr_reader :current_user, :format, :current_organization
+        attr_reader :current_user, :format
 
         def export_data
           Decidim.traceability.perform_action!(
             :export_users,
-            current_organization,
+            current_user.organization,
             current_user
           ) do
             Decidim::Exporters
@@ -38,7 +37,7 @@ module Decidim
         end
 
         def collection
-          current_organization.users.not_deleted
+          current_user.organization.users.not_deleted
         end
       end
     end
