@@ -11,6 +11,8 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::ExtraUserFields
 
+      require "extends/presenters/decidim/admin_log_organization_presenter_extends"
+
       DEFAULT_GENDER_OPTIONS = [:male, :female, :other].freeze
 
       routes do
@@ -18,11 +20,14 @@ module Decidim
         # resources :extra_user_fields
         # root to: "extra_user_fields#index"
       end
-
       initializer "decidim_extra_user_fields.registration_additions" do
         config.to_prepare do
           Decidim::RegistrationForm.class_eval do
             include ExtraUserFields::FormsDefinitions
+          end
+
+          Decidim::AdminLog::OrganizationPresenter.class_eval do
+            include OrganizationPresenterExtends
           end
 
           Decidim::OmniauthRegistrationForm.class_eval do
