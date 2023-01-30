@@ -5,17 +5,7 @@ require "spec_helper"
 describe Decidim::AdminLog::OrganizationPresenter, type: :helper do
   include_examples "present admin log entry" do
     let(:admin_log_resource) { organization }
-    let(:action) { "update_id_documents_config" }
-  end
-
-  include_examples "present admin log entry" do
-    let(:admin_log_resource) { organization }
     let(:action) { "update_extra_user_fields" }
-  end
-
-  include_examples "present admin log entry" do
-    let(:admin_log_resource) { organization }
-    let(:action) { "update" }
   end
 
   describe "when the action is update_extra_user_fields" do

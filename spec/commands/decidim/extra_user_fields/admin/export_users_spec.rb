@@ -8,7 +8,7 @@ describe Decidim::ExtraUserFields::Admin::ExportUsers do
   let(:format) { "CSV" }
 
   let(:command) do
-    described_class.new(format, user, current_organization)
+    described_class.new(format, user)
   end
 
   describe "call" do
@@ -20,7 +20,7 @@ describe Decidim::ExtraUserFields::Admin::ExportUsers do
       it "traces the action", versioning: true do
         expect(Decidim.traceability)
           .to receive(:perform_action!)
-          .with(:export_users, current_organization, user)
+          .with(:export_users, user.organization, user)
           .and_call_original
 
         expect { command.call }.to change(Decidim::ActionLog, :count).by(1)
