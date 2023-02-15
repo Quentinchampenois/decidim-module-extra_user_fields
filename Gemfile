@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-DECIDIM_VERSION = ">= 0.25.0"
-
 source "https://rubygems.org"
 
 ruby RUBY_VERSION
+
+DECIDIM_VERSION = ">= 0.27.0"
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-extra_user_fields", path: "."
@@ -27,5 +27,5 @@ group :development do
   gem "rubocop-faker"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
-  gem "web-console", "~> 3.5"
+  gem "web-console", "~> 4.0"
 end
