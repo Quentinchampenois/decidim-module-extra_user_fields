@@ -8,7 +8,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:registration_metadata) do
     {
-      firstname: firstname,
+      first_name: first_name,
       gender: gender,
       postal_code: postal_code,
       date_of_birth: date_of_birth,
@@ -20,7 +20,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   end
   # rubocop:enable Style/TrailingCommaInHashLiteral
 
-  let(:firstname) { "John" }
+  let(:first_name) { "John" }
   let(:gender) { "Other" }
   let(:postal_code) { "00000" }
   let(:date_of_birth) { "01/01/2000" }
@@ -35,8 +35,8 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       expect(serialized).to include(id: resource.id)
     end
 
-    it "includes the firstname" do
-      expect(serialized).to include(firstname: resource.extended_data["firstname"])
+    it "includes the first name" do
+      expect(serialized).to include(first_name: resource.extended_data["first_name"])
     end
 
     it "includes the gender" do

@@ -42,7 +42,7 @@ module Decidim
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
-            "firstname" => { "enabled" => form.firstname.presence || false },
+            "first_name" => { "enabled" => form.first_name.presence || false },
             "date_of_birth" => { "enabled" => form.date_of_birth.presence || false },
             "country" => { "enabled" => form.country.presence || false },
             "postal_code" => { "enabled" => form.postal_code.presence || false },

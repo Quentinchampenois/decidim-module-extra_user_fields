@@ -13,7 +13,7 @@ def fill_registration_form
 end
 
 def fill_extra_user_fields
-  fill_in :registration_user_firstname, with: "Nikola"
+  fill_in :registration_user_first_name, with: "Nikola"
   fill_in :registration_user_date_of_birth, with: "01/01/2000"
   select "Other", from: :registration_user_gender
   select "Argentina", from: :registration_user_country
@@ -38,7 +38,7 @@ describe "Extra user fields", type: :system do
   let(:extra_user_fields) do
     {
       "enabled" => true,
-      "firstname" => firstname,
+      "first_name" => first_name,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
@@ -54,7 +54,7 @@ describe "Extra user fields", type: :system do
     { "enabled" => true }
   end
 
-  let(:firstname) do
+  let(:first_name) do
     { "enabled" => true }
   end
 
@@ -82,7 +82,7 @@ describe "Extra user fields", type: :system do
   it "contains extra user fields" do
     within ".card__extra_user_fields" do
       expect(page).to have_content("Date of birth")
-      expect(page).to have_content("Firstname")
+      expect(page).to have_content("First name")
       expect(page).to have_content("Gender")
       expect(page).to have_content("Country")
       expect(page).to have_content("Postal code")
@@ -104,7 +104,7 @@ describe "Extra user fields", type: :system do
   end
 
   it_behaves_like "mandatory extra user fields", "date_of_birth"
-  it_behaves_like "mandatory extra user fields", "firstname"
+  it_behaves_like "mandatory extra user fields", "first_name"
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
@@ -117,7 +117,7 @@ describe "Extra user fields", type: :system do
 
     it "does not contain extra user fields" do
       expect(page).not_to have_content("Date of birth")
-      expect(page).not_to have_content("Firstname")
+      expect(page).not_to have_content("First name")
       expect(page).not_to have_content("Gender")
       expect(page).not_to have_content("Country")
       expect(page).not_to have_content("Postal code")

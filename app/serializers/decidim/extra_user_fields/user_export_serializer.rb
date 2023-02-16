@@ -21,7 +21,7 @@ module Decidim
       # rubocop:disable Style/TrailingCommaInArrayLiteral
       def extra_fields
         [
-          :firstname,
+          :first_name,
           :gender,
           :country,
           :postal_code,
