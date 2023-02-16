@@ -16,6 +16,7 @@ describe "Account", type: :system do
   let(:extra_user_fields) do
     {
       "enabled" => true,
+      "firstname" => firstname,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
@@ -32,6 +33,10 @@ describe "Account", type: :system do
   end
 
   let(:postal_code) do
+    { "enabled" => true }
+  end
+
+  let(:firstname) do
     { "enabled" => true }
   end
 
@@ -65,6 +70,7 @@ describe "Account", type: :system do
           fill_in :user_personal_url, with: "https://example.org"
           fill_in :user_about, with: "A Serbian-American inventor, electrical engineer, mechanical engineer, physicist, and futurist."
 
+          fill_in :user_firstname, with: "Nikola"
           fill_in :user_date_of_birth, with: "01/01/2000"
           select "Other", from: :user_gender
           select "Argentina", from: :user_country
@@ -84,6 +90,14 @@ describe "Account", type: :system do
           expect(page).to have_content("Nikola Tesla")
         end
       end
+    end
+
+    context "when firstname is not enabled" do
+      let(:firstname) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "firstname", "Firstname"
     end
 
     context "when date_of_birth is not enabled" do
