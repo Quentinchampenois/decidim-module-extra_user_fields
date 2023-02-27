@@ -10,9 +10,6 @@ module Decidim
     # This is the engine that runs on the public interface of extra_user_fields.
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::ExtraUserFields
-
-      require "extends/presenters/decidim/admin_log_organization_presenter_extends"
-
       DEFAULT_GENDER_OPTIONS = [:male, :female, :other].freeze
 
       routes do
