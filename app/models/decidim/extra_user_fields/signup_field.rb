@@ -13,6 +13,7 @@ module Decidim
       translatable_fields :title, :description
       attribute :mandatory, Virtus::Attribute::Boolean
       attribute :public, Virtus::Attribute::Boolean
+      attribute :options, Virtus::Attribute::Array[translatable_fields]
 
       AVAILABLE_TYPES = %w(text textarea date select checkbox radio).freeze
 
@@ -21,6 +22,9 @@ module Decidim
       validates :description, presence: true
       validates :mandatory, inclusion: { in: [true, false] }
       validates :public, inclusion: { in: [true, false] }
+
+      # If type is checkbox, radio or select then options must be present
+      validates :options, presence: true, if: -> { %w(checkbox radio select).include?(type) }
 
       # Public: finds the published signup field for the given scope and
       # organization. Returns them ordered by ascending weight (lowest first).

@@ -1,4 +1,9 @@
 <div class="grid-container full">
+  <div class="grid-x grid-margin-x">
+    <div class="card-section">
+      <button id="createSignupFieldBtn" type="button">New Field</button>
+    </div>
+  </div>
   <div class="grid-x grid-margin-x card-grid">
     <div class="cell small-6">
       <div class="card">
@@ -65,8 +70,29 @@
               contentType: "application/json",
               data: JSON.stringify({ manifests: activeBlocksManifestName })
           });
+      })
 
+      // When clicking the button, we create a new field
+      $("#createSignupFieldBtn").on("click", (event) => {
+          // Create a new field
+          var newField = document.createElement("li");
+          newField.setAttribute("draggable", "true");
+          newField.setAttribute("data-content-block-manifest-name", "extra-field");
+          newField.innerHTML =
+          `<div class='draggable-content'>
+            Champ de texte court
+              <div>
+                <%= icon "menu", role: "img", "aria-hidden": true %>
+              </div>
+            </div>
+          </div>`;
 
+          newField.innerHTML += `
+
+              `;
+
+          // Add the new field to the active fields list
+          document.querySelector(".js-list-actives").appendChild(newField);
       })
   })
 
