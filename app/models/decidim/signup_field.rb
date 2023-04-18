@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Decidim
-  module ExtraUserFields
     # Field which is loaded in the signup form as extra field.
     class SignupField < ApplicationRecord
       include Decidim::Publicable
@@ -9,22 +8,23 @@ module Decidim
 
       belongs_to :organization, foreign_key: :decidim_organization_id, class_name: "Decidim::Organization"
 
-      attribute :type, String
+      attribute :manifest, String
       translatable_fields :title, :description
       attribute :mandatory, Virtus::Attribute::Boolean
-      attribute :public, Virtus::Attribute::Boolean
-      attribute :options, Virtus::Attribute::Array[translatable_fields]
+      attribute :masked, Virtus::Attribute::Boolean
+      attribute :options, JsonbAttributes
 
       AVAILABLE_TYPES = %w(text textarea date select checkbox radio).freeze
+      OPTIONS_FOR_TYPES = %w(checkbox radio select).freeze
 
-      validates :type, inclusion: { in: AVAILABLE_TYPES }
-      validates :title, presence: true, uniqueness: { scope: :organization }
-      validates :description, presence: true
-      validates :mandatory, inclusion: { in: [true, false] }
-      validates :public, inclusion: { in: [true, false] }
+      # validates :manifest, inclusion: { in: AVAILABLE_TYPES }
+      # validates :title, presence: true, uniqueness: { scope: :organization }
+      # validates :description, presence: true
+      # validates :mandatory, inclusion: { in: [true, false] }
+      # validates :masked, inclusion: { in: [true, false] }
 
-      # If type is checkbox, radio or select then options must be present
-      validates :options, presence: true, if: -> { %w(checkbox radio select).include?(type) }
+      # If manifest is checkbox, radio or select then options must be present
+      # validates :options, presence: true, if: -> { OPTIONS_FOR_TYPES.include?(manifest) }
 
       # Public: finds the published signup field for the given scope and
       # organization. Returns them ordered by ascending weight (lowest first).
@@ -33,8 +33,7 @@ module Decidim
       end
 
       # def manifest
-      #   @manifest ||= Decidim::ExtraUserFields.manifests.find { |manifest| manifest.name == type }
+      #   @manifest ||= Decidim::ExtraUserFields.manifests.find { |manifest| manifest.name == manifest }
       # end
     end
   end
-end
