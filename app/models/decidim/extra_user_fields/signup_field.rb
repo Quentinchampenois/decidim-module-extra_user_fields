@@ -17,8 +17,8 @@ module Decidim
       AVAILABLE_TYPES = %w(text textarea date select checkbox radio).freeze
 
       validates :type, inclusion: { in: AVAILABLE_TYPES }
-      validates :title, presence: true, uniqueness: { scope: :organization }, length: { maximum: 256 }
-      validates :description, presence: true, length: { maximum: 256 }
+      validates :title, presence: true, uniqueness: { scope: :organization }
+      validates :description, presence: true
       validates :mandatory, inclusion: { in: [true, false] }
       validates :public, inclusion: { in: [true, false] }
 
