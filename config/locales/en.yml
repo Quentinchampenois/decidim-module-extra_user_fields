@@ -39,6 +39,8 @@ en:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
           form:
+            active_fields: Active fields
+            inactive_fields: Inactive fields
             extra_user_fields:
               section: Available extra fields for signup form
               extra_user_fields_enabled: Enable extra user fields

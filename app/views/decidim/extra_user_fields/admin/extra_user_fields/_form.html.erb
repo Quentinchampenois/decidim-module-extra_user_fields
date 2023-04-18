@@ -1,27 +1,73 @@
-<p class="callout success"><%== t(".callout.help") %></p>
-<div class="card">
-  <div class="card-section extra_user_fields">
-    <div>
-      <h3><%= t(".global.title") %></h3>
+<div class="grid-container full">
+  <div class="grid-x grid-margin-x card-grid">
+    <div class="cell small-6">
+      <div class="card">
+        <div class="card-section">
+          <p class="mb-m"><%= t(".active_fields") %></p>
+          <ul class="draggable-list js-connect js-list-actives" data-sort-url="<%= decidim_admin.organization_homepage_path %>">
+            <li draggable="true" data-content-block-manifest-name="extra-field">
+              <div class="draggable-content">
+                <%= "Champ de texte court" %>
+                <div>
+
+                  <%= icon "menu", role: "img", "aria-hidden": true %>
+                </div>
+              </div>
+            </li>
+
+            <li draggable="true" data-content-block-manifest-name="extra-field">
+              <div class="draggable-content">
+                <%= "Champ de texte long" %>
+                <div>
+
+                  <%= icon "menu", role: "img", "aria-hidden": true %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="row column">
-      <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled") %>
+    <div class="cell small-6">
+      <div class="card">
+        <div class="card-section">
+          <p class="mb-m"><%= t(".inactive_fields") %></p>
+          <ul class="draggable-list js-connect js-list-availables">
+            <li draggable="true" data-content-block-manifest-name="extra-field">
+              <div class="draggable-content">
+                <%= "Sélection de ville" %>
+                <div>
+
+                  <%= icon "menu", role: "img", "aria-hidden": true %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="card extra_fields_setup">
-  <div class="card-section">
-    <div>
-      <h3><%= t(".extra_user_fields.section") %></h3>
-    </div>
+<script>
 
-    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/date_of_birth", locals: { form: form } %>
-    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/country", locals: { form: form } %>
-    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/postal_code", locals: { form: form } %>
-    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/gender", locals: { form: form } %>
-    <%# Block ExtraUserFields ExtraFields %>
 
-    <%# EndBlock %>
-  </div>
-</div>
+  $(document).ready(() => {
+      $("#submit_extra_fields").on("submit", (event) => {
+          event.preventDefault()
+          var activeBlocks = Array.prototype.slice.call(document.querySelectorAll(".js-list-actives li"));
+          var activeBlocksManifestName = activeBlocks.map(block => block.dataset.contentBlockManifestName);
+          var sortUrl = document.querySelector(".js-list-actives").dataset.sortUrl;
+
+          $.ajax({
+              method: "PUT",
+              url: sortUrl,
+              contentType: "application/json",
+              data: JSON.stringify({ manifests: activeBlocksManifestName })
+          });
+
+
+      })
+  })
+
+</script>
