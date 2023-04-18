@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSignupFields < ActiveRecord::Migration[6.0]
   def up
     create_table :decidim_signup_fields do |t|
