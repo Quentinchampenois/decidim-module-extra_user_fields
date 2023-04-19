@@ -51,16 +51,11 @@ module Decidim
 
 
         def active_fields
-          @active_blocks ||= signup_fields.published
-          @active_blocks.sort_by(&:weight)
-        end
-
-        def signup_fields
-          @signup_fields ||= Decidim::SignupField.where(organization: current_organization)
+          @active_fields ||= Decidim::SignupField.actives_ordered(organization: current_organization)
         end
 
         def inactive_fields
-          @inactive_fields ||= signup_fields.unpublished
+          @inactive_fields ||= Decidim::SignupField.inactives(current_organization)
         end
       end
     end

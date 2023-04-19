@@ -17,6 +17,8 @@ FactoryBot.define do
     mandatory { true }
     masked { true }
     options { nil }
+    published_at { Time.zone.now }
+    weight { 0 }
 
     trait :with_options do
       options do
@@ -35,6 +37,10 @@ FactoryBot.define do
           }
         ]
       end
+    end
+
+    trait :inactive do
+      published_at { nil }
     end
   end
 end
