@@ -49,12 +49,16 @@ module Decidim
 
         private
 
-        def active_blocks
+        def active_fields
           @active_blocks ||= content_blocks.published.where(manifest_name: Decidim.content_blocks.for(:homepage).map(&:name))
         end
 
-        def inactive_blocks
-          @inactive_blocks ||= Decidim::SignupField.unpublished
+        def signup_fields
+          @signup_fields ||= Decidim::SignupField.where(organization: current_organization)
+        end
+
+        def inactive_fields
+          @inactive_fields ||= signup_fields.unpublished
         end
       end
     end

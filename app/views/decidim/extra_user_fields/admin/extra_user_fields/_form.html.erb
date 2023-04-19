@@ -28,7 +28,7 @@
         <div class="card-section">
           <p class="mb-m"><%= t(".inactive_fields") %></p>
           <ul class="draggable-list js-connect js-list-availables">
-            <% inactive_blocks.each do |signup_field| %>
+            <% inactive_fields.each do |signup_field| %>
               <li draggable="true" data-content-block-manifest-name="extra-field">
                 <div class="draggable-content">
                   <%= signup_field.title[current_locale] %>
