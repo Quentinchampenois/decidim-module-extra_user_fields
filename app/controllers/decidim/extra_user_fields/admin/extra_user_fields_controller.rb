@@ -8,7 +8,7 @@ module Decidim
       class ExtraUserFieldsController < Admin::ApplicationController
         layout "decidim/admin/settings"
 
-        helper_method :active_blocks, :inactive_blocks
+        helper_method :active_fields, :inactive_fields
 
         def index
           enforce_permission_to :read, :extra_user_fields
@@ -49,8 +49,10 @@ module Decidim
 
         private
 
+
         def active_fields
-          @active_blocks ||= content_blocks.published.where(manifest_name: Decidim.content_blocks.for(:homepage).map(&:name))
+          @active_blocks ||= signup_fields.published
+          @active_blocks.sort_by(&:weight)
         end
 
         def signup_fields

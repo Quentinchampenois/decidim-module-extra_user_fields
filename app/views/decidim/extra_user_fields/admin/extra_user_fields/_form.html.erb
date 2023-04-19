@@ -10,15 +10,17 @@
         <div class="card-section">
           <p class="mb-m"><%= t(".active_fields") %></p>
           <ul class="draggable-list js-connect js-list-actives" data-sort-url="<%= decidim_admin.organization_homepage_path %>">
-            <li draggable="true" data-content-block-manifest-name="extra-field">
-              <div class="draggable-content">
-                <%= "Champ de texte long" %>
-                <div>
+            <% active_fields.each do |signup_field| %>
+              <li draggable="true" data-content-block-manifest-name=<%= signup_field.manifest %>>
+                <div class="draggable-content">
+                  <%= signup_field.title[current_locale] %>
+                  <div>
 
-                  <%= icon "menu", role: "img", "aria-hidden": true %>
+                    <%= icon "menu", role: "img", "aria-hidden": true %>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            <% end %>
           </ul>
         </div>
       </div>
@@ -39,16 +41,6 @@
                 </div>
               </li>
             <% end %>
-
-            <li draggable="true" data-content-block-manifest-name="extra-field">
-              <div class="draggable-content">
-                <%= "Sélection de ville" %>
-                <div>
-
-                  <%= icon "menu", role: "img", "aria-hidden": true %>
-                </div>
-              </div>
-            </li>
           </ul>
         </div>
       </div>
@@ -62,39 +54,28 @@
   $(document).ready(() => {
       $("#submit_extra_fields").on("submit", (event) => {
           event.preventDefault()
-          var activeBlocks = Array.prototype.slice.call(document.querySelectorAll(".js-list-actives li"));
-          var activeBlocksManifestName = activeBlocks.map(block => block.dataset.contentBlockManifestName);
-          var sortUrl = document.querySelector(".js-list-actives").dataset.sortUrl;
+          var activeFields = document.querySelectorAll(".js-list-actives li");
 
-          $.ajax({
-              method: "PUT",
-              url: sortUrl,
-              contentType: "application/json",
-              data: JSON.stringify({ manifests: activeBlocksManifestName })
-          });
+          var activeFieldsManifestName = [];
+          activeFields.forEach((field) => {
+              activeFieldsManifestName.push([field.innerText.trim(), field.dataset.contentBlockManifestName]);
+          })
+
+          console.log(activeFieldsManifestName)
+
       })
 
       // When clicking the button, we create a new field
       $("#createSignupFieldBtn").on("click", (event) => {
-          // Create a new field
-          var newField = document.createElement("li");
-          newField.setAttribute("draggable", "true");
-          newField.setAttribute("data-content-block-manifest-name", "extra-field");
-          newField.innerHTML =
-          `<div class='draggable-content'>
-            Champ de texte court
-              <div>
-                <%= icon "menu", role: "img", "aria-hidden": true %>
-              </div>
-            </div>
-          </div>`;
-
-          newField.innerHTML += `
-
-              `;
-
+          // Create a new field using the command CreateSignupField
+<!--          $.ajax({-->
+<!--              method: "POST",-->
+<!--              url: "<%# decidim_admin.create_signup_field_path %>",-->
+<!--              contentType: "application/json",-->
+<!--              data: JSON.stringify({ title: "New field", description: "Salut", required: true, weight: 3, published_at: Date.now() , masked: false, manifest: "text" })-->
+<!--          });-->
           // Add the new field to the active fields list
-          document.querySelector(".js-list-actives").appendChild(newField);
+          // document.querySelector(".js-list-actives").appendChild(newField);
       })
   })
 
