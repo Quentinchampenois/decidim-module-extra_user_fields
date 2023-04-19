@@ -32,7 +32,8 @@ module Decidim
 
         def update_extra_user_fields!
           Decidim::SignupField.where(organization: current_organization).find_each do |signup_f|
-            form.field_ids.include?(signup_f.id.to_s) ? signup_f.publish! : signup_f.unpublish!
+            weight = form.field_ids.index(signup_f.id.to_s)
+            weight.blank? ? signup_f.unpublish! : signup_f.publish!(weight: weight)
           end
         end
       end

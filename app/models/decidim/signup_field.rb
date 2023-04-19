@@ -35,5 +35,21 @@ module Decidim
     def self.actives_ordered(organization:)
       actives(organization).order(weight: :asc)
     end
+
+    #
+    # Public: Publishes signup field and update weight
+    #
+    # Returns true if the record was properly saved, false otherwise.
+    def publish!(weight:)
+      update!(published_at: Time.current, weight: weight)
+    end
+
+    #
+    # Public: Unpublishes signup field and remove weight
+    #
+    # Returns true if the record was properly saved, false otherwise.
+    def unpublish!
+      update!(published_at: nil, weight: nil)
+    end
   end
 end
