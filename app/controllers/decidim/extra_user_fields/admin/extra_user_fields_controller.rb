@@ -49,7 +49,6 @@ module Decidim
 
         private
 
-
         def active_fields
           @active_fields ||= Decidim::SignupField.actives_ordered(organization: current_organization)
         end

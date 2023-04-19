@@ -4,26 +4,25 @@ module Decidim
   module ExtraUserFields
     module Admin
       class ExtraUserFieldsForm < Decidim::Form
-        include TranslatableAttributes
+        attribute :field_ids, Array
 
-        attribute :enabled, Virtus::Attribute::Boolean
-        attribute :country, Virtus::Attribute::Boolean
-        attribute :postal_code, Virtus::Attribute::Boolean
-        attribute :date_of_birth, Virtus::Attribute::Boolean
-        attribute :gender, Virtus::Attribute::Boolean
-        # Block ExtraUserFields Attributes
+        validate :field_in_organization
 
-        # EndBlock
+        private
 
-        def map_model(model)
-          self.enabled = model.extra_user_fields["enabled"]
-          self.country = model.extra_user_fields.dig("country", "enabled")
-          self.postal_code = model.extra_user_fields.dig("postal_code", "enabled")
-          self.date_of_birth = model.extra_user_fields.dig("date_of_birth", "enabled")
-          self.gender = model.extra_user_fields.dig("gender", "enabled")
-          # Block ExtraUserFields MapModel
+        def field_in_organization
+          return if current_organization.blank?
+          return if field_ids.blank?
 
-          # EndBlock
+          errors.add(:not_authorized) unless fields_found?
+        end
+
+        def fields_found?
+          fields.count == field_ids.count
+        end
+
+        def fields
+          @fields ||= Decidim::SignupField.get_fields(field_ids, current_organization)
         end
       end
     end

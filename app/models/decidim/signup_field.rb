@@ -25,6 +25,7 @@ module Decidim
 
     scope :actives, ->(org) { where(organization: org).published }
     scope :inactives, ->(org) { where(organization: org).unpublished }
+    scope :get_fields, ->(ary, org) { where(id: ary, organization: org) }
 
     # If manifest is checkbox, radio or select then options must be present
     # validates :options, presence: true, if: -> { OPTIONS_FOR_TYPES.include?(manifest) }

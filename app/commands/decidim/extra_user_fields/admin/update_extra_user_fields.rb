@@ -31,27 +31,10 @@ module Decidim
         attr_reader :form
 
         def update_extra_user_fields!
-          Decidim.traceability.update!(
-            form.current_organization,
-            form.current_user,
-            extra_user_fields: extra_user_fields
-          )
+          Decidim::SignupField.where(organization: current_organization).find_each do |signup_f|
+            form.field_ids.include?(signup_f.id.to_s) ? signup_f.publish! : signup_f.unpublish!
+          end
         end
-
-        # rubocop:disable Style/TrailingCommaInHashLiteral
-        def extra_user_fields
-          {
-            "enabled" => form.enabled.presence || false,
-            "date_of_birth" => { "enabled" => form.date_of_birth.presence || false },
-            "country" => { "enabled" => form.country.presence || false },
-            "postal_code" => { "enabled" => form.postal_code.presence || false },
-            "gender" => { "enabled" => form.gender.presence || false },
-            # Block ExtraUserFields SaveFieldInConfig
-
-            # EndBlock
-          }
-        end
-        # rubocop:enable Style/TrailingCommaInHashLiteral
       end
     end
   end

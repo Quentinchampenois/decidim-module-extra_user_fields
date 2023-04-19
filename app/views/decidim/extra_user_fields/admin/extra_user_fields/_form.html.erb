@@ -31,11 +31,10 @@
           <p class="mb-m"><%= t(".inactive_fields") %></p>
           <ul class="draggable-list js-connect js-list-availables">
             <% inactive_fields.each do |signup_field| %>
-              <li draggable="true" data-content-block-manifest-name="extra-field">
+              <li draggable="true" data-content-block-manifest-name=<%= signup_field.id %>>
                 <div class="draggable-content">
                   <%= signup_field.title[current_locale] %>
                   <div>
-
                     <%= icon "menu", role: "img", "aria-hidden": true %>
                   </div>
                 </div>
@@ -58,10 +57,15 @@
 
           var activeFieldsManifestName = [];
           activeFields.forEach((field) => {
-              activeFieldsManifestName.push([field.innerText.trim(), field.dataset.contentBlockManifestName]);
+              activeFieldsManifestName.push(field.dataset.contentBlockManifestName);
           })
 
-          console.log(activeFieldsManifestName)
+          $.ajax({
+              method: "PATCH",
+              url: $("#submit_extra_fields").attr("action"),
+              contentType: "application/json",
+              data: JSON.stringify({ field_ids: activeFieldsManifestName })
+          });
 
       })
 
