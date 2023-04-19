@@ -12,16 +12,6 @@
           <ul class="draggable-list js-connect js-list-actives" data-sort-url="<%= decidim_admin.organization_homepage_path %>">
             <li draggable="true" data-content-block-manifest-name="extra-field">
               <div class="draggable-content">
-                <%= "Champ de texte court" %>
-                <div>
-
-                  <%= icon "menu", role: "img", "aria-hidden": true %>
-                </div>
-              </div>
-            </li>
-
-            <li draggable="true" data-content-block-manifest-name="extra-field">
-              <div class="draggable-content">
                 <%= "Champ de texte long" %>
                 <div>
 
@@ -38,6 +28,18 @@
         <div class="card-section">
           <p class="mb-m"><%= t(".inactive_fields") %></p>
           <ul class="draggable-list js-connect js-list-availables">
+            <% inactive_blocks.each do |signup_field| %>
+              <li draggable="true" data-content-block-manifest-name="extra-field">
+                <div class="draggable-content">
+                  <%= signup_field.title[current_locale] %>
+                  <div>
+
+                    <%= icon "menu", role: "img", "aria-hidden": true %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+
             <li draggable="true" data-content-block-manifest-name="extra-field">
               <div class="draggable-content">
                 <%= "Sélection de ville" %>

@@ -8,6 +8,8 @@ module Decidim
       class ExtraUserFieldsController < Admin::ApplicationController
         layout "decidim/admin/settings"
 
+        helper_method :active_blocks, :inactive_blocks
+
         def index
           enforce_permission_to :read, :extra_user_fields
 
@@ -43,6 +45,17 @@ module Decidim
               send_data export_data.read, type: "text/#{export_data.extension}", filename: export_data.filename("participants")
             end
           end
+        end
+
+        private
+
+        def active_blocks
+          @active_blocks ||= content_blocks.published.where(manifest_name: Decidim.content_blocks.for(:homepage).map(&:name))
+        end
+
+        def inactive_blocks
+          byebug
+          @inactive_blocks ||= Decidim::SignupField.unpublished
         end
       end
     end

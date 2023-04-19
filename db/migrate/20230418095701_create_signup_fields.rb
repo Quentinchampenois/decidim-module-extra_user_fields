@@ -9,6 +9,8 @@ class CreateSignupFields < ActiveRecord::Migration[6.0]
       t.boolean :mandatory, default: true
       t.boolean :masked, default: true
       t.jsonb :options, null: true
+      t.datetime :published_at, index: true
+      t.integer :weight
 
       t.references :decidim_organization
     end
