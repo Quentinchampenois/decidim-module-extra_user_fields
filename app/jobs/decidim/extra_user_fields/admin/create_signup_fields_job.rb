@@ -24,7 +24,6 @@ module Decidim
                                                    "woman": { en: "Woman", fr: "Femme" },
                                                    "nonBinary": { en: "Non Binary", fr: "Non binaire" } }])
             ]
-          byebug
 
           array.each { |model| Decidim::ExtraUserFields::Admin::CreateSignupField.call(model) }
         end

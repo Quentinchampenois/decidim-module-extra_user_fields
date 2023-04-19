@@ -9,5 +9,32 @@ FactoryBot.define do
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
-  # Add engine factories here
+  factory :signup_field, class: "Decidim::SignupField" do
+    organization { create(:organization) }
+    manifest { "text" }
+    title { generate_localized_title }
+    description { generate_localized_title }
+    mandatory { true }
+    masked { true }
+    options { nil }
+
+    trait :with_options do
+      options do
+        [
+          {
+            label: generate_localized_title,
+            value: "option-1"
+          },
+          {
+            label: generate_localized_title,
+            value: "option-2"
+          },
+          {
+            label: generate_localized_title,
+            value: "option-3"
+          }
+        ]
+      end
+    end
+  end
 end

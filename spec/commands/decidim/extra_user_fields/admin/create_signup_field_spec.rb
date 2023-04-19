@@ -14,12 +14,12 @@ module Decidim
         let(:description) { { "en" => "Description" } }
         let(:mandatory) { true }
         let(:masked) { true }
-        let(:options) { [
-          { label: { "en" => "Option 1" }, value: "option_1" },
-          { label: { "en" => "Option 2" }, value: "option_2" },
-        ] }
-
-        # rubocop:enable Style/TrailingCommaInHashLiteral
+        let(:options) do
+          [
+            { label: { "en" => "Option 1" }, value: "option_1" },
+            { label: { "en" => "Option 2" }, value: "option_2" }
+          ]
+        end
 
         let(:model) do
           SignupField.new(
