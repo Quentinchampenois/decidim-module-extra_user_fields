@@ -54,7 +54,6 @@ module Decidim
         end
 
         def inactive_blocks
-          byebug
           @inactive_blocks ||= Decidim::SignupField.unpublished
         end
       end
