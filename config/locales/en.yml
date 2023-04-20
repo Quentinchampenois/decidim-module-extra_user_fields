@@ -16,46 +16,63 @@ en:
       extra_user_fields:
         name: ExtraUserFields
     extra_user_fields:
-      registration_form:
-        signup:
-          legend: More information
       admin:
+        exports:
+          users: Participants
         extra_user_fields:
+          dashboard:
+            active_fields: Active fields
+            callout:
+              help: Enable custom extra user fields functionality to be able to manage
+                extra fields in your signup form. Even if option is checked, signup
+                form will be updated <strong>only if there is at least one extra field
+                enabled</strong>
+            extra_user_fields:
+              extra_user_fields_enabled: Enable extra user fields
+              section: Available extra fields for signup form
+            global:
+              title: Activate / deactivate functionality
+            inactive_fields: Inactive fields
           fields:
             country:
-              description: This field is a list of countries. User will be able to choose a country
+              description: This field is a list of countries. User will be able to
+                choose a country
               label: Enable country field
             date_of_birth:
               description: This field is a Date field. User will be able to register
                 a birth date by using a Date picker
               label: Enable date of birth field
             gender:
-              description: This field is a list of genders. User will be able to choose a gender
+              description: This field is a list of genders. User will be able to choose
+                a gender
               label: Enable gender field
             postal_code:
-              description: This field is a String field. User will be able to fill in a postal code
+              description: This field is a String field. User will be able to fill
+                in a postal code
               label: Enable postal code field
+          index:
+            new: New extra user field
+            save: Save configuration
+            title: Manage extra user fields
           update:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
+        signup_fields:
           form:
-            active_fields: Active fields
-            inactive_fields: Inactive fields
-            extra_user_fields:
-              section: Available extra fields for signup form
-              extra_user_fields_enabled: Enable extra user fields
-            global:
-              title: Activate / deactivate functionality
-            callout:
-              help: Enable custom extra user fields functionality to be able to manage extra fields
-                in your signup form. Even if option is checked, signup form will be
-                updated <strong>only if there is at least one extra field enabled</strong>
-          index:
-            save: Save configuration
-            title: Manage extra user fields
-        exports:
-          users: Participants
+            description: Description
+            mandatory: Mandatory
+            masked: Public
+            options: Options
+            title: Title
+            type: Type
+          new:
+            submit: Create
+            title: Create a new field
+            warning_text: Warning RGPD & Privacy
       genders:
         female: Female
         male: Male
         other: Other
+      registration_form:
+        signup:
+          legend: More information

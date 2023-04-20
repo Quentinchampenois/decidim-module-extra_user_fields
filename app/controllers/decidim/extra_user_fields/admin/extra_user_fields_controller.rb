@@ -8,7 +8,7 @@ module Decidim
       class ExtraUserFieldsController < Admin::ApplicationController
         layout "decidim/admin/settings"
 
-        helper_method :active_fields, :inactive_fields
+        helper_method :active_fields, :inactive_fields, :new_signup_field_path
 
         def index
           enforce_permission_to :read, :extra_user_fields

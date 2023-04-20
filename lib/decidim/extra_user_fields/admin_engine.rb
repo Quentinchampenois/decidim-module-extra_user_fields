@@ -16,6 +16,8 @@ module Decidim
           get :export_users
         end
 
+        resources :signup_fields, only: [:create, :new, :destroy, :edit, :update]
+
         resources :extra_user_fields, only: [:index]
         match "/extra_user_fields" => "extra_user_fields#update", :via => :patch, as: "update"
 

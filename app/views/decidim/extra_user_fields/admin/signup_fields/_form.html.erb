@@ -1,0 +1,84 @@
+ <div class="form-group">
+
+  <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields)), {label: t('.type')}, {id: "type_control"} %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :title, class: 'form-control', placeholder: 'Title', label: t('.title')%>
+</div>
+
+<div class="form-group">
+  <%= form.text_area :description, class: 'form-control', placeholder: 'Description', label: t('.description') %>
+</div>
+
+<div class="form-group">
+  <%= form.check_box :mandatory, label: t('.mandatory') %>
+</div>
+
+<div class="form-group">
+  <%= form.check_box :masked, label: t('.masked') %>
+</div>
+
+<div id="options-container" hidden="hidden">
+  <div class="form-group">
+    <div class="row column">
+      <label for="options"><%= t('.options') %>></label>
+      <%= button_tag 'Clear', type: 'button', id: 'clear-option-btn', class: 'btn btn-danger clear-option-btn w-30' %>
+    </div>
+    <div id="options-list">
+      <% @form.options.each_with_index do |option, index| %>
+        <div class="form-group option-group">
+          <%= form.text_field :options, index: index, value: option, class: 'form-control option-input', placeholder: "Option #{index + 1}" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= button_tag '+', type: 'button', id: 'add-option-btn', class: 'btn btn-primary add-option-btn rounded-circle' %>
+    </div>
+  </div>
+</div>
+
+<script>
+    // JavaScript code to dynamically add options for checkbox, radio, and select types
+    $(document).ready(function (){
+        $('#type_control').on('change', (event) => {
+            console.log(event.target.value);
+            // Get the selected type value
+            var selectedType = event.target.value;
+
+            $('#options-container').hide()
+            clearOptions();
+
+            if (selectedType === 'checkbox' || selectedType === 'radio' || selectedType === 'select') {
+                // Stock the selectedType into a hidden field
+                $('#signup_fields_form_type').val(selectedType);
+                $('#options-container').show();
+            }
+        });
+
+        // Add option button
+        $('#add-option-btn').on('click', (event) => {
+            addOption();
+        });
+
+        // Clear option button
+        $('#clear-option-btn').on('click', (event) => {
+            clearOptions();
+        });
+
+        // Add option function
+        function addOption() {
+            var optionIndex = $('#options-list').children().length;
+            var optionGroup = $('<div class="form-group option-group"></div>');
+            var optionInput = $(`<input type="text" name="signup_fields_form[options][${optionIndex}]" id="signup_fields_form_options_${optionIndex}" class="form-control option-input option" placeholder="Option ${optionIndex + 1}">`);
+            optionGroup.append(optionInput);
+            $('#options-list').append(optionGroup);
+        }
+
+        // Clear option function
+        function clearOptions() {
+            $('#options-list').empty();
+            addOption()
+        }
+    });
+</script>

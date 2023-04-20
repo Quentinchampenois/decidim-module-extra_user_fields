@@ -9,8 +9,8 @@ module Decidim
         # Public: Initializes the command.
         #
         # form - A form object with the params.
-        def initialize(model)
-          @model = model
+        def initialize(form)
+          @form = form
         end
 
         # Executes the command. Broadcasts these events:
@@ -20,7 +20,7 @@ module Decidim
         #
         # Returns nothing.
         def call
-          return broadcast(:invalid) if model.invalid?
+          return broadcast(:invalid) if form.invalid?
 
           create_signup_field
           broadcast(:ok)
@@ -28,18 +28,24 @@ module Decidim
 
         private
 
-        attr_reader :model
+        attr_reader :form
 
         def create_signup_field
           @signup_field = SignupField.create!(
-            organization: model.organization,
-            manifest: model.manifest,
-            title: model.title,
-            description: model.description,
-            mandatory: model.mandatory,
-            masked: model.masked,
-            options: model.options
+            organization: current_organization,
+            manifest: form.manifest,
+            title: translatable_attribute(form.title),
+            description: translatable_attribute(form.description),
+            mandatory: form.mandatory,
+            masked: form.masked,
+            options: form.options
           )
+        end
+
+        def translatable_attribute(attribute)
+          {
+            I18n.locale => attribute
+          }
         end
       end
     end
