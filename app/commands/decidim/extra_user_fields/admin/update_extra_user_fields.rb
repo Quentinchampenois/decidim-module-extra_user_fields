@@ -31,11 +31,15 @@ module Decidim
         attr_reader :form
 
         def update_extra_user_fields!
-          Decidim.traceability.update!(
+          Decidim.traceability.perform_action!(
+            :update_extra_user_fields,
             form.current_organization,
-            form.current_user,
-            extra_user_fields: extra_user_fields
-          )
+            form.current_user
+          ) do
+            form.current_organization.update!(
+              extra_user_fields: extra_user_fields
+            )
+          end
         end
 
         # rubocop:disable Style/TrailingCommaInHashLiteral

@@ -26,7 +26,7 @@ module Decidim
         def export_data
           Decidim.traceability.perform_action!(
             :export_users,
-            current_organization,
+            current_user.organization,
             current_user
           ) do
             Decidim::Exporters
@@ -37,7 +37,7 @@ module Decidim
         end
 
         def collection
-          current_organization.users.not_deleted
+          current_user.organization.users.not_deleted
         end
       end
     end

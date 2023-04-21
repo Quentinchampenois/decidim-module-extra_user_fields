@@ -10,7 +10,6 @@ module Decidim
     # This is the engine that runs on the public interface of extra_user_fields.
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::ExtraUserFields
-
       DEFAULT_GENDER_OPTIONS = [:male, :female, :other].freeze
 
       routes do
@@ -18,11 +17,14 @@ module Decidim
         # resources :extra_user_fields
         # root to: "extra_user_fields#index"
       end
-
       initializer "decidim_extra_user_fields.registration_additions" do
         config.to_prepare do
           Decidim::RegistrationForm.class_eval do
             include ExtraUserFields::FormsDefinitions
+          end
+
+          Decidim::AdminLog::OrganizationPresenter.class_eval do
+            include OrganizationPresenterExtends
           end
 
           Decidim::OmniauthRegistrationForm.class_eval do
