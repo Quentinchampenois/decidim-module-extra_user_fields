@@ -7,7 +7,7 @@ module Decidim
         attribute :manifest, String
         attribute :title, String
         attribute :description, String
-        attribute :options, Array[String]
+        attribute :options, String
         attribute :mandatory, Virtus::Attribute::Boolean
         attribute :masked, Virtus::Attribute::Boolean
 

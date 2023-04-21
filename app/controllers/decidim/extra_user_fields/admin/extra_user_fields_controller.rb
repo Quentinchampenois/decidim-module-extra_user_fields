@@ -8,7 +8,7 @@ module Decidim
       class ExtraUserFieldsController < Admin::ApplicationController
         layout "decidim/admin/settings"
 
-        helper_method :active_fields, :inactive_fields, :new_signup_field_path
+        helper_method :active_fields, :inactive_fields, :new_signup_field_path, :signup_field_name
 
         def index
           enforce_permission_to :read, :extra_user_fields
@@ -55,6 +55,14 @@ module Decidim
 
         def inactive_fields
           @inactive_fields ||= Decidim::SignupField.inactives(current_organization)
+        end
+
+        def signup_field_name(signup_field)
+          signup_field_current_locale?(signup_field)
+        end
+
+        def signup_field_current_locale?(signup_field)
+          signup_field.title[current_locale].presence || "#{signup_field.title[signup_field.title.keys.first]} (#{signup_field.title.keys.first})"
         end
       end
     end

@@ -38,7 +38,7 @@ module Decidim
             description: translatable_attribute(form.description),
             mandatory: form.mandatory,
             masked: form.masked,
-            options: form.options
+            options: options_form(form.options)
           )
         end
 
@@ -46,6 +46,11 @@ module Decidim
           {
             I18n.locale => attribute
           }
+        end
+
+        def options_form(options)
+          # Get each word (separated by a comma) and make them translatable (don't forget to strip them first and last)
+          options.split(",").map { |option| translatable_attribute(option.strip) }
         end
       end
     end
