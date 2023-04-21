@@ -5,6 +5,12 @@
         <h3><%= t(".signup.legend") %></h3>
       </div>
 
+      <% if current_organization.activated_extra_field?(:first_name) %>
+        <div class="field">
+          <%= f.text_field :first_name %>
+        </div>
+      <% end %>
+
       <% if current_organization.activated_extra_field?(:date_of_birth) %>
         <div class="field">
           <%= f.date_field :date_of_birth %>

@@ -10,6 +10,7 @@ module Decidim
         let(:user) { create :user, :admin, :confirmed, organization: organization }
 
         let(:extra_user_fields_enabled) { true }
+        let(:first_name) { true }
         let(:postal_code) { true }
         let(:country) { true }
         let(:gender) { true }
@@ -22,6 +23,7 @@ module Decidim
         let(:form_params) do
           {
             "enabled" => extra_user_fields_enabled,
+            "first_name" => first_name,
             "postal_code" => postal_code,
             "country" => country,
             "gender" => gender,
@@ -72,6 +74,7 @@ module Decidim
 
               extra_user_fields = organization.extra_user_fields
               expect(extra_user_fields).to include("enabled" => true)
+              expect(extra_user_fields).to include("first_name" => { "enabled" => true })
               expect(extra_user_fields).to include("country" => { "enabled" => true })
               expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true })
               expect(extra_user_fields).to include("gender" => { "enabled" => true })

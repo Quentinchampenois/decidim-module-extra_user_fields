@@ -11,6 +11,7 @@ module Decidim
       included do
         include ::Decidim::ExtraUserFields::ApplicationHelper
 
+        attribute :first_name, String
         attribute :country, String
         attribute :postal_code, String
         attribute :date_of_birth, Decidim::Attributes::LocalizedDate
@@ -20,6 +21,7 @@ module Decidim
 
         # EndBlock
 
+        validates :first_name, presence: true, if: :first_name?
         validates :country, presence: true, if: :country?
         validates :postal_code, presence: true, if: :postal_code?
         validates :date_of_birth, presence: true, if: :date_of_birth?
@@ -33,6 +35,7 @@ module Decidim
       def map_model(model)
         extended_data = model.extended_data.with_indifferent_access
 
+        self.first_name = extended_data[:first_name]
         self.country = extended_data[:country]
         self.postal_code = extended_data[:postal_code]
         self.date_of_birth = Date.parse(extended_data[:date_of_birth]) if extended_data[:date_of_birth].present?
@@ -44,6 +47,10 @@ module Decidim
       end
 
       private
+
+      def first_name?
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:first_name)
+      end
 
       def country?
         extra_user_fields_enabled && current_organization.activated_extra_field?(:country)
