@@ -4,6 +4,8 @@ module Decidim
   module ExtraUserFields
     module Admin
       class SignupFieldsController < Admin::ApplicationController
+        layout "decidim/admin/settings"
+
         def new
           enforce_permission_to :read, :extra_user_fields
 
