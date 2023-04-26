@@ -5,27 +5,30 @@ module Decidim
     module Admin
       class CreateSignupFieldsJob < ApplicationJob
         queue_as :default
+
         def perform(current_organization)
-          array =
-            [
-              Decidim::SignupField.new(organization: current_organization,
-                                       manifest: "date", title: { "en" => "Date of Birth" },
-                                       description: { "en" => "Please enter your date of birth" },
-                                       mandatory: true,
-                                       masked: true,
-                                       options: nil),
+          array = [
+            { manifest: "date", title: { I18n.locale => "Date of birth" }, description: { I18n.locale => "Please enter your date of birth" } },
+            { manifest: "text", title: { I18n.locale => "Simple question ?" }, description: { I18n.locale => "Please answer this question" } },
+            { manifest: "select",
+              title: { I18n.locale => "Gender" },
+              description: { I18n.locale => "Select a gender" },
+              options: [{ "man" => { I18n.locale => "Female" }, "woman" => { I18n.locale => "Male" }, "nonBinary" => { I18n.locale => "Other" } }] }
+          ]
 
-              Decidim::SignupField.new(organization: current_organization,
-                                       manifest: "select", title: { "en" => "Gender" },
-                                       description: { "en" => "Please select your gender" },
-                                       mandatory: true,
-                                       masked: true,
-                                       options: [{ "man": { en: "Man", fr: "Homme" },
-                                                   "woman": { en: "Woman", fr: "Femme" },
-                                                   "nonBinary": { en: "Non Binary", fr: "Non binaire" } }])
-            ]
+          array.map do |model|
+            model = Decidim::SignupField.new(organization: current_organization,
+                                             manifest: model[:manifest],
+                                             title: model[:title],
+                                             description: model[:description],
+                                             mandatory: true,
+                                             masked: true,
+                                             options: model.fetch(:options, nil))
 
-          array.each { |model| Decidim::ExtraUserFields::Admin::CreateSignupField.call(model) }
+            transaction do
+              Decidim::ExtraUserFields::Admin::CreateSignupField.call(model)
+            end
+          end
         end
       end
     end
