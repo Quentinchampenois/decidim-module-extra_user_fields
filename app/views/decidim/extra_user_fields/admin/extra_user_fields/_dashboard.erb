@@ -8,8 +8,11 @@
             <% active_fields.each do |signup_field| %>
               <li draggable="true" data-content-block-manifest-name=<%= signup_field.id %>>
                 <div class="draggable-content">
-                  <%= signup_field_name(signup_field) %>
+                  <%= signup_field_name(signup_field) %> ( <%= signup_field_manifest(signup_field) %> )
                   <div>
+                    <%= link_to decidim_extra_user_fields.edit_signup_field_path(signup_field.id), class: "action-icon--edit" do %>
+                      <%= icon "pencil", role: "img", "aria-hidden": true %>
+                    <% end %>
                     <%= icon "menu", role: "img", "aria-hidden": true %>
                   </div>
                 </div>

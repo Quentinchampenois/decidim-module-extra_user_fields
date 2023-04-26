@@ -9,6 +9,7 @@ module Decidim
           return permission_action unless user&.admin?
 
           allow! if access_extra_user_fields?
+          allow! if create_extra_user_fields?
           allow! if update_extra_user_fields?
 
           permission_action
@@ -17,6 +18,11 @@ module Decidim
         def access_extra_user_fields?
           permission_action.subject == :extra_user_fields &&
             permission_action.action == :read
+        end
+
+        def create_extra_user_fields?
+          permission_action.subject == :extra_user_fields &&
+            permission_action.action == :create
         end
 
         def update_extra_user_fields?

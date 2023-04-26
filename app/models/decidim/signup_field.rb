@@ -35,7 +35,6 @@ module Decidim
     def self.actives_ordered(organization:)
       actives(organization).order(weight: :asc)
     end
-
     #
     # Public: Publishes signup field and update weight
     #

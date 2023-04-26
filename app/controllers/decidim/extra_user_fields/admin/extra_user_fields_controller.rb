@@ -8,7 +8,7 @@ module Decidim
       class ExtraUserFieldsController < Admin::ApplicationController
         layout "decidim/admin/settings"
 
-        helper_method :active_fields, :inactive_fields, :new_signup_field_path, :signup_field_name
+        helper_method :active_fields, :inactive_fields, :new_signup_field_path, :signup_field_name, :signup_field_manifest
 
         def index
           enforce_permission_to :read, :extra_user_fields
@@ -59,6 +59,23 @@ module Decidim
 
         def signup_field_name(signup_field)
           signup_field_current_locale?(signup_field)
+        end
+
+        def signup_field_manifest(signup_field)
+          translated_field(signup_field.manifest)
+        end
+
+        def translated_field(field)
+          field_translations = {
+            "text" => "Short Text",
+            "textarea" => "Long Text",
+            "date" => "Date",
+            "select" => "Dropdown",
+            "checkbox" => "Checkbox",
+            "radio" => "Radio Button"
+          }
+
+          field_translations[field]
         end
 
         def signup_field_current_locale?(signup_field)

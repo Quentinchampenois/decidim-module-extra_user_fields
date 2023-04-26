@@ -1,14 +1,18 @@
  <div class="form-group">
 
-  <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields)), {label: t('.type')}, {id: "type_control"} %>
+   <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields), @form.get_signup_manifest(@signup_field)), { label: t('.type') }, { id: "type_control" } %>
+
 </div>
 
 <div class="form-group">
-  <%= form.text_field :title, class: 'form-control', placeholder: t('.title'), label: t('.title')%>
+  <%= form.text_field :title, class: 'form-control', placeholder: t('.title'), value: @form.get_signup_title(@signup_field), label: t('.title')%>
+  <%# Warning text %>
+  <p class="text-danger"><%= @form.warning_text?(@signup_field) %></p>
 </div>
 
 <div class="form-group">
-  <%= form.text_area :description, class: 'form-control', placeholder: t('.description'), label: t('.description') %>
+  <%= form.text_area :description, class: 'form-control', placeholder: t('.description'), value: @form.get_signup_description(@signup_field), label: t('.description') %>
+  <p class="text-danger"><%= @form.warning_text?(@signup_field) %></p>
 </div>
 
 <div class="form-group">
@@ -22,10 +26,9 @@
  <div id="options-container" hidden="hidden">
    <div class="form-group">
      <div>
-       <%= form.text_area :options, class: 'form-control', label: t('.options'), id: 'option_field' %>
-       <p class="text-danger"><%= t('.warning_text') %>)</p>
-     </div>
-     <div class="text-center">
+       <%= form.text_area :options, class: 'form-control', label: t('.options'), id: 'option_field', value: @form.get_signup_options(@signup_field) %>
+       <p class="text-danger"><%= t('.warning_text') %></p>
+       <p class="text-danger"><%= @form.warning_text?(@signup_field) %></p>
      </div>
    </div>
  </div>
@@ -34,8 +37,7 @@
     // JavaScript code to dynamically add options for checkbox, radio, and select types
     $(document).ready(function (){
         $('#type_control').on('change', (event) => {
-            console.log(event.target.value);
-            // Get the selected type value
+
             var selectedType = event.target.value;
 
             $('#options-container').hide()
@@ -48,5 +50,19 @@
                 $('#option_field').val(null);
             }
         });
+
+        function showOptions() {
+            var selectedType = $('#type_control').val();
+            if (selectedType === 'checkbox' || selectedType === 'radio' || selectedType === 'select') {
+                $('#signup_fields_form_type').val(selectedType);
+                $('#options-container').show();
+            } else {
+                // Empty the option_field from its text
+                $('#option_field').val(null);
+            }
+        }
+
+
+        $('#type_control').trigger('change');
     });
 </script>
