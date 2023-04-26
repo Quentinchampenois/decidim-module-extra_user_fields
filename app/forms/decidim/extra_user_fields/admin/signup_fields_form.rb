@@ -15,6 +15,10 @@ module Decidim
           %w(text textarea date select checkbox radio).freeze
         end
 
+        def get_signup_id(signup_field)
+          signup_field ? signup_field.id : nil
+        end
+
         def get_signup_title(signup_field)
           signup_field ? signup_field.title[I18n.locale.to_s] : nil
         end
@@ -34,12 +38,12 @@ module Decidim
         def warning_text?(signup_field)
           return unless signup_field
 
-
           I18n.t("decidim.extra_user_fields.admin.signup_fields.warning_text", language: I18n.locale.to_s)
         end
+
         def signup_field_show_options(signup_field)
           current_locale = I18n.locale.to_s
-          options = signup_field.options.map { |option| option[current_locale] if option.key?(current_locale) }.compact
+          options = signup_field.options.map { |option| option[current_locale] if option.has_key?(current_locale) }.compact
           # Stringify them and join them with a comma
           options.map(&:to_s).join(", ")
         end

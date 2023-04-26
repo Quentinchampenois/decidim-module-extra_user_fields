@@ -11,6 +11,7 @@ module Decidim
           allow! if access_extra_user_fields?
           allow! if create_extra_user_fields?
           allow! if update_extra_user_fields?
+          allow! if update_signup_field?
 
           permission_action
         end
@@ -27,6 +28,11 @@ module Decidim
 
         def update_extra_user_fields?
           permission_action.subject == :extra_user_fields &&
+            permission_action.action == :update
+        end
+
+        def update_signup_field?
+          permission_action.subject == :signup_field &&
             permission_action.action == :update
         end
       end

@@ -1,7 +1,7 @@
- <div class="form-group">
+<%= form.hidden_field :id, value: @form.get_signup_id(@signup_field) %>
 
+<div class="form-group">
    <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields), @form.get_signup_manifest(@signup_field)), { label: t('.type') }, { id: "type_control" } %>
-
 </div>
 
 <div class="form-group">

@@ -49,7 +49,8 @@ module Decidim
         end
 
         def options_form(options)
-          # Get each word (separated by a comma) and make them translatable (don't forget to strip them first and last)
+          return unless options
+
           options.split(",").map { |option| translatable_attribute(option.strip) }
         end
       end

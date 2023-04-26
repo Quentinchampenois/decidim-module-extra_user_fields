@@ -10,7 +10,7 @@
                 <div class="draggable-content">
                   <%= signup_field_name(signup_field) %> ( <%= signup_field_manifest(signup_field) %> )
                   <div>
-                    <%= link_to decidim_extra_user_fields.edit_signup_field_path(signup_field.id), class: "action-icon--edit" do %>
+                    <%= link_to decidim_extra_user_fields.edit_signup_field_path(signup_field), class: "action-icon--edit" do %>
                       <%= icon "pencil", role: "img", "aria-hidden": true %>
                     <% end %>
                     <%= icon "menu", role: "img", "aria-hidden": true %>
@@ -32,6 +32,9 @@
                 <div class="draggable-content">
                   <%= signup_field_name(signup_field) %>
                   <div>
+                    <%= link_to decidim_extra_user_fields.edit_signup_field_path(signup_field), class: "action-icon--edit" do %>
+                      <%= icon "pencil", role: "img", "aria-hidden": true %>
+                    <% end %>
                     <%= icon "menu", role: "img", "aria-hidden": true %>
                   </div>
                 </div>

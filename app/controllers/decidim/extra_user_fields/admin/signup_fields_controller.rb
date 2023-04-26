@@ -29,14 +29,14 @@ module Decidim
         end
 
         def edit
-          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_model(params)
+          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.new
           @signup_field = Decidim::SignupField.find(params[:id])
         end
 
         def update
-          enforce_permission_to :update, :extra_user_fields
+          enforce_permission_to :update, :signup_field
 
-          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_model(params)
+          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_params(params)
 
           UpdateSignupField.call(@form) do
             on(:ok) do

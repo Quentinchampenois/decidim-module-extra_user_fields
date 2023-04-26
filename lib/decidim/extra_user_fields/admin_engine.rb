@@ -17,6 +17,7 @@ module Decidim
         end
 
         resources :signup_fields, only: [:create, :new, :destroy, :edit, :update]
+        match "/signup_fields" => "signup_fields#update", :via => :patch, as: "update_signup_field"
 
         resources :extra_user_fields, only: [:index]
         match "/extra_user_fields" => "extra_user_fields#update", :via => :patch, as: "update"

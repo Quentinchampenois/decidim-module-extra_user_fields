@@ -58,21 +58,12 @@ en:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
         signup_fields:
-          options:
-            long_text: Long Text Field
-            short_text: Short Text Field
-            date: Date Field
-            list: List Field
-            select: Dropdown Field
-            checkbox: Checkbox Field
-            radio: Radio Field
-          warning_text: "Warning! This field could be empty because of the current locale you are currently using (%{language})"
+          create:
+            error: An error occurred on creation
+            success: Extra user field correctly created
           edit:
             submit: Update
             title: Edit extra user fields
-          create:
-            success: Extra user field correctly created
-            error: An error occurred on creation
           form:
             description: Description
             mandatory: Mandatory
@@ -85,6 +76,16 @@ en:
             submit: Create
             title: Create a new field
             warning_text: Warning RGPD & Privacy
+          options:
+            checkbox: Checkbox Field
+            date: Date Field
+            list: List Field
+            long_text: Long Text Field
+            radio: Radio Field
+            select: Dropdown Field
+            short_text: Short Text Field
+          warning_text: Warning! This field could be empty because of the current
+            locale you are currently using (%{language})
       genders:
         female: Female
         male: Male

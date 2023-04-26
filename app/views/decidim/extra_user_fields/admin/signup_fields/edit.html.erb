@@ -5,7 +5,7 @@
     </h2>
   </div>
   <div class="card-section">
-    <%= form_for @form, url: signup_fields_path(@form), method: "put", id: "edit_signup_field" do |f| %>
+    <%= form_for @form, url: signup_fields_path(@form), method: "patch", id: "edit_signup_field" do |f| %>
 
       <%= render partial: "form", object: f, locals: { component: @component, signup_field: @signup_field } %>
 
@@ -13,3 +13,4 @@
     <% end %>
   </div>
 </div>
+
