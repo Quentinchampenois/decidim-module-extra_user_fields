@@ -29,16 +29,21 @@ module Decidim
         end
 
         def edit
-          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.new
-          @signup_field = Decidim::SignupField.find(params[:id])
+          enforce_permission_to :update, :signup_field
+
+          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_model(signup_field)
         end
 
         def update
           enforce_permission_to :update, :signup_field
 
-          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_params(params)
+          @form = Decidim::ExtraUserFields::Admin::SignupFieldsForm.from_params(
+            params,
+            current_organization: current_organization
+          )
 
           UpdateSignupField.call(@form) do
+            # TODO: Handle :not_found response
             on(:ok) do
               flash[:notice] = I18n.t("signup_fields.update.success", scope: "decidim.extra_user_fields.admin")
               redirect_to extra_user_fields_path
@@ -49,6 +54,12 @@ module Decidim
               render :edit
             end
           end
+        end
+
+        private
+
+        def signup_field
+          @signup_field ||= Decidim::SignupField.find_by(organization: current_organization, id: params[:id])
         end
       end
     end

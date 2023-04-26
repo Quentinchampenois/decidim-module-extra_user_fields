@@ -5,6 +5,7 @@ module Decidim
   class SignupField < ApplicationRecord
     include Decidim::Publicable
     include Decidim::TranslatableResource
+    include Decidim::TranslatableAttributes
 
     belongs_to :organization, foreign_key: :decidim_organization_id, class_name: "Decidim::Organization"
 

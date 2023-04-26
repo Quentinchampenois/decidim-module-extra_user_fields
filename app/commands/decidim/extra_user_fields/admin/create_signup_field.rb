@@ -34,24 +34,18 @@ module Decidim
           @signup_field = SignupField.create!(
             organization: current_organization,
             manifest: form.manifest,
-            title: translatable_attribute(form.title),
-            description: translatable_attribute(form.description),
+            title: form.title,
+            description: form.description,
             mandatory: form.mandatory,
             masked: form.masked,
             options: options_form(form.options)
           )
         end
 
-        def translatable_attribute(attribute)
-          {
-            I18n.locale => attribute
-          }
-        end
-
         def options_form(options)
           return unless options
 
-          options.split(",").map { |option| translatable_attribute(option.strip) }
+          options.split(",").map(&:strip)
         end
       end
     end

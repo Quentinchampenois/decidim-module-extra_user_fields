@@ -26,10 +26,10 @@ module Decidim
 
         def update_signup_field!
           signup_field.update!(
-            organization: form.organization,
+            organization: current_organization,
             manifest: form.manifest,
-            title: translatable_attribute(form.title),
-            description: translatable_attribute(form.description),
+            title: form.title,
+            description: form.description,
             mandatory: form.mandatory,
             masked: form.masked,
             options: options_form(form.options)
@@ -37,19 +37,13 @@ module Decidim
         end
 
         def signup_field
-          @signup_field ||= SignupField.find_by(organization: form.organization, id: @form.id)
-        end
-
-        def translatable_attribute(attribute)
-          {
-            I18n.locale => attribute
-          }
+          @signup_field ||= SignupField.find_by(organization: current_organization, id: @form.id)
         end
 
         def options_form(options)
           return unless options
 
-          options.split(",").map { |option| translatable_attribute(option.strip) }
+          options.split(",").map(&:strip)
         end
       end
     end

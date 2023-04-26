@@ -6,13 +6,10 @@
 
 <div class="form-group">
   <%= form.translated :text_field, :title, autofocus: true %>
-  <%# Warning text %>
-  <p class="text-danger"><%= @form.warning_text?(@signup_field) %></p>
 </div>
 
 <div class="form-group">
   <%= form.translated :text_area, :description, autofocus: true %>
-  <p class="text-danger"><%= @form.warning_text?(@signup_field) %></p>
 </div>
 
 <div class="form-group">
