@@ -4,9 +4,11 @@ module Decidim
   module ExtraUserFields
     module Admin
       class SignupFieldsForm < Decidim::Form
+        include TranslatableAttributes
+
+        translatable_attribute :title, String
+        translatable_attribute :description, String
         attribute :manifest, String
-        attribute :title, String
-        attribute :description, String
         attribute :options, String
         attribute :mandatory, Virtus::Attribute::Boolean
         attribute :masked, Virtus::Attribute::Boolean
