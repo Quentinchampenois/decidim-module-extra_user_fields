@@ -9,9 +9,14 @@ module Decidim
         end
 
         def call
-          return broadcast(:invalid) if form.invalid?
+          return broadcast(:invalid, form) if form.invalid?
+          return broadcast(:not_found, form) if signup_field.blank?
+          return broadcast(:invalid, form) if signup_field.invalid?
 
-          update_signup_field
+          transaction do
+            update_signup_field!
+          end
+
           broadcast(:ok)
         end
 
@@ -19,12 +24,9 @@ module Decidim
 
         attr_reader :form
 
-        def update_signup_field
-          @signup_field = SignupField.find_by(organization: current_organization, id: @form.id)
-          return unless @signup_field
-
-          @signup_field.update!(
-            organization: current_organization,
+        def update_signup_field!
+          signup_field.update!(
+            organization: form.organization,
             manifest: form.manifest,
             title: translatable_attribute(form.title),
             description: translatable_attribute(form.description),
@@ -32,6 +34,10 @@ module Decidim
             masked: form.masked,
             options: options_form(form.options)
           )
+        end
+
+        def signup_field
+          @signup_field ||= SignupField.find_by(organization: form.organization, id: @form.id)
         end
 
         def translatable_attribute(attribute)

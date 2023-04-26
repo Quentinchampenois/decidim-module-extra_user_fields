@@ -16,23 +16,23 @@ module Decidim
         end
 
         def get_signup_id(signup_field)
-          signup_field ? signup_field.id : nil
+          signup_field.id if signup_field
         end
 
         def get_signup_title(signup_field)
-          signup_field ? signup_field.title[I18n.locale.to_s] : nil
+          signup_field.title[I18n.locale.to_s] if signup_field
         end
 
         def get_signup_manifest(signup_field)
-          signup_field ? signup_field.manifest : nil
+          signup_field.manifest if signup_field
         end
 
         def get_signup_description(signup_field)
-          signup_field ? signup_field.description[I18n.locale.to_s] : nil
+          signup_field.description[I18n.locale.to_s] if signup_field
         end
 
         def get_signup_options(signup_field)
-          signup_field ? signup_field_show_options(signup_field) : nil
+          signup_field_show_options(signup_field) if signup_field
         end
 
         def warning_text?(signup_field)
