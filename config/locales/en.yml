@@ -58,6 +58,8 @@ en:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
         signup_fields:
+          update:
+            success: Signup field updated successfully
           create:
             error: An error occurred on creation
             success: Extra user field correctly created
