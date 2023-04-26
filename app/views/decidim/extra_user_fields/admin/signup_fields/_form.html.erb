@@ -1,27 +1,27 @@
 <%= form.hidden_field :id, value: @form.get_signup_id(@signup_field) %>
 
-<div class="form-group">
+<div class="">
    <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields), @form.get_signup_manifest(@signup_field)), { label: t('.type') }, { id: "type_control" } %>
 </div>
 
-<div class="form-group">
+<div class="">
   <%= form.translated :text_field, :title, autofocus: true %>
 </div>
 
-<div class="form-group">
+<div class="">
   <%= form.translated :text_area, :description, autofocus: true %>
 </div>
 
-<div class="form-group">
+<div class="">
   <%= form.check_box :mandatory, label: t('.mandatory') %>
 </div>
 
-<div class="form-group">
+<div class="">
   <%= form.check_box :masked, label: t('.masked') %>
 </div>
 
  <div id="options-container" hidden="hidden">
-   <div class="form-group">
+   <div class="">
      <div>
        <%= form.text_area :options, class: 'form-control', label: t('.options'), id: 'option_field', value: @form.get_signup_options(@signup_field) %>
        <p class="text-danger"><%= t('.warning_text') %></p>
