@@ -5,15 +5,23 @@
     </h2>
   </div>
   <div class="card-section">
-    <div class="button--double">
-      <%= link_to t(".new"), decidim_extra_user_fields.new_signup_field_path, class: "button" %>
-    </div>
-    <%= decidim_form_for(@form, url: "/admin/extra_user_fields/extra_user_fields", html: { class: "form edit_extra_user_fields", id: "submit_extra_fields" }, method: :patch) do |f| %>
-      <%= render partial: "dashboard", object: f %>
-
-      <div class="button--double form-general-submit">
-        <%= f.submit t(".save") %>
+    <div class="row">
+      <div class="columns">
+        <%= link_to t(".new"), decidim_extra_user_fields.new_signup_field_path, class: "button" %>
       </div>
-    <% end %>
+    </div>
+    <div class="row">
+      <div class="columns">
+        <%= decidim_form_for(@form, url: "/admin/extra_user_fields/extra_user_fields", html: { class: "form edit_extra_user_fields", id: "submit_extra_fields" }, method: :patch) do |f| %>
+          <%= render partial: "dashboard", object: f %>
+
+          <div class="button--double form-general-submit">
+            <%= f.submit t(".save") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
   </div>
 </div>

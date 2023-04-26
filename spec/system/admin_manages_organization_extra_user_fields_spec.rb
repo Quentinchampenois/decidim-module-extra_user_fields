@@ -24,28 +24,22 @@ describe "Admin manages organization extra user fields", type: :system do
       visit decidim_extra_user_fields.root_path
     end
 
-    it "displays the form" do
+    it "allows to create a new extra field" do
       within "#extra_user_fields" do
-        expect(page).to have_content("Manage extra user fields")
+        expect(page).to have_link("New extra user field")
       end
     end
 
-    it "allows to enable extra user fields functionality" do
-      within ".extra_user_fields" do
-        expect(page).to have_content("Enable extra user fields")
-      end
-
-      within ".extra_fields_setup" do
-        expect(page).to have_content("Available extra fields for signup form")
+    it "display drag and drop elements" do
+      within "#submit_extra_fields" do
+        expect(page).to have_content("Active fields")
+        expect(page).to have_content("Inactive fields")
       end
     end
 
-    context "when form is valid" do
-      it "flashes a success message" do
-        page.check("extra_user_fields[enabled]")
-
-        find("*[type=submit]").click
-        expect(page).to have_content("Extra user fields correctly updated in organization")
+    it "form can be submitted" do
+      within "#submit_extra_fields" do
+        expect(page).to have_button("Save configuration")
       end
     end
   end
