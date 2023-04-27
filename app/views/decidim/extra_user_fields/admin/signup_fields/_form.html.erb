@@ -1,7 +1,11 @@
 <%= form.hidden_field :id, value: @form.get_signup_id(@signup_field) %>
 
 <div class="">
-   <%= form.select :manifest, options_for_select(@form.translated_available_fields.zip(@form.available_fields), @form.get_signup_manifest(@signup_field)), { label: t('.type') }, { id: "type_control" } %>
+   <%= form.hidden_field :manifest, value: params["manifest"] %>
+<!--  Text centered with the type written -->
+  <div class="text-center">
+    <h2><%= @form.translated_field(params["manifest"], @signup_field)%></h2>
+  </div>
 </div>
 
 <div class="">

@@ -46,22 +46,24 @@ module Decidim
         def signup_field_show_options(signup_field)
           current_locale = I18n.locale.to_s
           options = signup_field.options.map { |option| option[current_locale] if option.has_key?(current_locale) }.compact
-          # Stringify them and join them with a comma
           options.map(&:to_s).join(", ")
         end
 
-        # Function to "translate" each of the available fields into a human-readable -> text -> Short Text
         def translated_available_fields
-          field_translations = {
-            "text" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.short_text"),
-            "textarea" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.long_text"),
-            "date" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.date"),
-            "select" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.select"),
-            "checkbox" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.checkbox"),
-            "radio" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.radio")
-          }
+          [
+            { "manifest" => "text", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.short_text") },
+            { "manifest" => "textarea", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.long_text") },
+            { "manifest" => "date", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.date") },
+            { "manifest" => "select", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.select") },
+            { "manifest" => "checkbox", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.checkbox") },
+            { "manifest" => "radio", "name" => I18n.t("decidim.extra_user_fields.admin.signup_fields.options.radio") }
+          ]
+        end
 
-          available_fields.map { |field| field_translations[field] }
+        def translated_field(manifest, signup_field)
+          manifest = signup_field.manifest if signup_field
+          field = translated_available_fields.find { |available_field| manifest == available_field["manifest"] }
+          field["name"]
         end
       end
     end

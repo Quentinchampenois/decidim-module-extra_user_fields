@@ -3,11 +3,20 @@
     <h2 class="card-title">
       <%= t ".title" %>
     </h2>
+  <span class="card-section dropdown tiny button button--simple" data-toggle="manifest-dropdown"><%= t(".new") %></span>
+  <div class="dropdown-pane" id="manifest-dropdown" data-dropdown data-position=bottom data-alignment=right data-auto-focus="true" data-close-on-click="true">
+    <ul class="vertical menu add-components">
+      <% current_organization.translated_available_fields.each do |field| %>
+        <li>
+          <%= link_to decidim_extra_user_fields.new_signup_field_path(manifest: field['manifest']) do %>
+            <%= field['name'] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
   </div>
   <div class="card-section">
-    <div class="">
-      <%= link_to t(".new"), decidim_extra_user_fields.new_signup_field_path, class: "button" %>
-    </div>
     <%= decidim_form_for(@form, url: "/admin/extra_user_fields/extra_user_fields", html: { class: "form edit_extra_user_fields", id: "submit_extra_fields" }, method: :patch) do |f| %>
       <%= render partial: "dashboard", object: f %>
 
