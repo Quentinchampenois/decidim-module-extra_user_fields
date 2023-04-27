@@ -25,8 +25,10 @@ module Decidim
           signup_field.title[I18n.locale.to_s] if signup_field
         end
 
-        def get_signup_manifest(signup_field)
-          signup_field.manifest if signup_field
+        def get_signup_manifest(manifest, signup_field)
+          return signup_field.manifest if signup_field
+
+          manifest
         end
 
         def get_signup_description(signup_field)

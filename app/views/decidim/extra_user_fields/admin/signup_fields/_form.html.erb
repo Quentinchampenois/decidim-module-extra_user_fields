@@ -1,8 +1,7 @@
 <%= form.hidden_field :id, value: @form.get_signup_id(@signup_field) %>
 
 <div class="">
-   <%= form.hidden_field :manifest, value: params["manifest"] %>
-<!--  Text centered with the type written -->
+   <%= form.hidden_field :manifest, value: @form.get_signup_manifest(params["manifest"], @signup_field) %>
   <div class="text-center">
     <h2><%= @form.translated_field(params["manifest"], @signup_field)%></h2>
   </div>
