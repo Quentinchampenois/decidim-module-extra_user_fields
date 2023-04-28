@@ -51,6 +51,7 @@ en:
                 in a postal code
               label: Enable postal code field
           index:
+            delete: Are you sure you want to delete this extra user field ?
             new: New extra user field
             save: Save configuration
             title: Manage extra user fields
@@ -58,11 +59,12 @@ en:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
         signup_fields:
-          update:
-            success: Signup field updated successfully
           create:
             error: An error occurred on creation
             success: Extra user field correctly created
+          destroy:
+            error: An error occurred on deletion
+            success: Extra user field correctly deleted
           edit:
             submit: Update
             title: Edit extra user fields
@@ -86,6 +88,9 @@ en:
             radio: Radio Field
             select: Dropdown Field
             short_text: Short Text Field
+          update:
+            error: An error occurred on update
+            success: Signup field updated successfully
           warning_text: Warning! This field could be empty because of the current
             locale you are currently using (%{language})
       genders:

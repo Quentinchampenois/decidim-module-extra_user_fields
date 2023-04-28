@@ -58,6 +58,22 @@ module Decidim
           end
         end
 
+        def destroy
+          enforce_permission_to :destroy, :signup_field
+
+          DestroySignupField.call(signup_field) do
+            on(:ok) do
+              flash[:notice] = I18n.t("signup_fields.destroy.success", scope: "decidim.extra_user_fields.admin")
+            end
+
+            on(:invalid) do
+              flash[:alert] = I18n.t("signup_fields.destroy.error", scope: "decidim.extra_user_fields.admin")
+            end
+          end
+
+          redirect_to extra_user_fields_path
+        end
+
         private
 
         def signup_field

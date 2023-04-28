@@ -12,6 +12,7 @@ module Decidim
           allow! if create_extra_user_fields?
           allow! if update_extra_user_fields?
           allow! if update_signup_field?
+          allow! if destroy_signup_field?
 
           permission_action
         end
@@ -34,6 +35,11 @@ module Decidim
         def update_signup_field?
           permission_action.subject == :signup_field &&
             permission_action.action == :update
+        end
+
+        def destroy_signup_field?
+          permission_action.subject == :signup_field &&
+            permission_action.action == :destroy
         end
       end
     end
