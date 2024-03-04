@@ -23,6 +23,7 @@ module Decidim
           newsletter_notifications_at: form.newsletter_at,
           accepted_tos_version: form.current_organization.tos_version,
           locale: form.current_locale,
+          notifications_sending_frequency: Decidim::ExtraUserFields.notifications_sending_frequency,
           extended_data: extended_data
         )
       end
