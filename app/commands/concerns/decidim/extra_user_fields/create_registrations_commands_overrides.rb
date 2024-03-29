@@ -60,7 +60,7 @@ module Decidim
       end
 
       def send_email_to_statutory_representative
-        return if form.statutory_representative_email.blank?
+        return if form.statutory_representative_email.blank? || form.underage != "1"
 
         Decidim::ExtraUserFields::StatutoryRepresentativeMailer.inform(@user).deliver_later
       end

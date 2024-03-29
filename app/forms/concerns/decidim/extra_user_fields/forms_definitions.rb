@@ -102,6 +102,7 @@ module Decidim
       # Method to check if birth date is under the limit
       def birth_date_under_limit
         return unless date_of_birth? && underage?
+
         return if date_of_birth.blank? || underage.blank? || underage_limit.blank?
 
         age = calculate_age(date_of_birth)
