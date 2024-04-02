@@ -20,6 +20,7 @@ $(document).ready(function() {
             underageCheckbox.prop('checked', true);
             statutoryRepresentativeEmailField.removeClass('hidden');
         } else {
+            statutoryRepresentativeEmailField.find('input').val('');
             underageFieldSet.addClass('hidden');
             underageCheckbox.prop('checked', false);
             statutoryRepresentativeEmailField.addClass('hidden');
@@ -31,6 +32,7 @@ $(document).ready(function() {
             if (underageCheckbox.prop('checked')) {
                 statutoryRepresentativeEmailField.removeClass('hidden');
             } else {
+                statutoryRepresentativeEmailField.find('input').val('');
                 statutoryRepresentativeEmailField.addClass('hidden');
             }
         });

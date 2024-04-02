@@ -15,6 +15,8 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       country: country,
       phone_number: phone_number,
       location: location,
+      underage: underage,
+      statutory_representative_email: statutory_representative_email,
       # Block ExtraUserFields ExtraUserFields
 
       # EndBlock
@@ -28,6 +30,9 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   let(:country) { "Argentina" }
   let(:phone_number) { "0123456789" }
   let(:location) { "Cahors" }
+  let(:underage) { true }
+  let(:underage_limit) { 18 }
+  let(:statutory_representative_email) { "parent@example.org" }
   # Block ExtraUserFields RspecVar
 
   # EndBlock
@@ -62,6 +67,13 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       expect(serialized).to include(location: resource.extended_data["location"])
     end
 
+    it "includes the underage" do
+      expect(serialized).to include(underage: resource.extended_data["underage"])
+    end
+
+    it "includes the statutory representative email" do
+      expect(serialized).to include(statutory_representative_email: resource.extended_data["statutory_representative_email"])
+    end
     # Block ExtraUserFields IncludeExtraField
 
     # EndBlock
